@@ -4,7 +4,7 @@ import * as facemesh from "@tensorflow-models/facemesh";
 import Webcam from "react-webcam";
 
 import "./App.css";
-import { drawMesh } from "./utilities";
+import { drawMesh, calculateAngles } from "./utilities";
 
 function App() {
   // define references
@@ -44,6 +44,7 @@ function App() {
       // drawing
       const ctx = canvasRef.current.getContext("2d");
       drawMesh(face, ctx);
+      console.log(calculateAngles(face));
     }
   };
 
