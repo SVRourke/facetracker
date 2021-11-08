@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import * as tf from "@tensorflow/tfjs";
 import * as facemesh from "@tensorflow-models/facemesh";
 import Webcam from "react-webcam";
 
@@ -18,7 +17,7 @@ function App() {
     });
     setInterval(() => {
       detect(net);
-    }, 10);
+    }, 100);
   };
   //detect
   const detect = async (net) => {
@@ -38,7 +37,7 @@ function App() {
       // Set canvas width
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
-      const face = await net.estimateFaces(video);
+      const face = await net.estimateFaces(video, false, false, false);
       // console.log(face);
 
       // drawing
