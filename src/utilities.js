@@ -31,8 +31,8 @@ export const calculateAngles = (predictions) => {
   const { bridge, left, right, center, bottom1 } =
     processPredictions(predictions);
   return {
-    pitch: segmentRatio(bridge, center, bottom1) * 100,
-    yaw: segmentRatio(left, center, right) * 100,
+    pitch: segmentRatio(bridge, center, bottom1, 1) * 100,
+    yaw: segmentRatio(left, center, right, 0) * 100,
     roll: slope(bridge, center),
   };
 };
@@ -53,6 +53,6 @@ export const drawMesh = (predictions, ctx) => {
 const slope = (a, b) => (b[1] - a[1]) / (b[0] - a[0]);
 const distance = (a, b) => Math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2);
 const midpoint = (a, b) => [a[0] + b[0], a[1] + b[1]];
-
-const segmentRatio = (a, divisor, b) =>
-  (a[1] - divisor[1]) / (divisor[1] - b[1]);
+// might not work for left right as it relies on y not x
+const segmentRatio = (a, divisor, b, pos) =>
+  (a[pos] - divisor[pos]) / (divisor[pos] - b[pos]);
