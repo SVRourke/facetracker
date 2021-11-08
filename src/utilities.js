@@ -26,21 +26,27 @@ const drawPoint = (point, ctx) => {
   ctx.fillStyle = "aqua";
   ctx.fill();
 };
+
+export const calculateAngles = (predictions) => {
+  const { bridge, left, right, center, bottom1 } =
+    processPredictions(predictions);
+  return {
+    pitch: segmentRatio(bridge, center, bottom1) * 100,
+    yaw: segmentRatio(left, center, right) * 100,
+    roll: slope(bridge, center),
+  };
+};
+
 export const drawMesh = (predictions, ctx) => {
   if (predictions.length > 0) {
-    const { bridge, left, right, center, bottom1, bottom2 } =
+    const { bridge, left, right, center, bottom1 } =
       processPredictions(predictions);
-    const midlip = midpoint(bottom1, bottom2);
-    // console.log(distance(bridge, center), midlip);
-    console.log(segmentRatio(left, center, right));
 
     drawPoint(bridge, ctx);
     drawPoint(left, ctx);
     drawPoint(right, ctx);
     drawPoint(center, ctx);
     drawPoint(bottom1, ctx);
-    drawPoint(midlip, ctx);
-    drawPoint(bottom2, ctx);
   }
 };
 
