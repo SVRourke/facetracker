@@ -18,12 +18,12 @@ const processPredictions = (predictions) => {
   }
 };
 // draw points
-const drawPoint = (point, ctx) => {
+const drawPoint = (point, color, ctx) => {
   const x = point[0];
   const y = point[1];
   ctx.beginPath();
   ctx.arc(x, y, 2, 0, 3 * Math.PI);
-  ctx.fillStyle = "aqua";
+  ctx.fillStyle = color;
   ctx.fill();
 };
 
@@ -39,14 +39,13 @@ export const calculateAngles = (predictions) => {
 
 export const drawMesh = (predictions, ctx) => {
   if (predictions.length > 0) {
-    const { bridge, left, right, center, bottom1 } =
-      processPredictions(predictions);
-
-    drawPoint(bridge, ctx);
-    drawPoint(left, ctx);
-    drawPoint(right, ctx);
-    drawPoint(center, ctx);
-    drawPoint(bottom1, ctx);
+    const { scaledMesh } = predictions[0];
+    drawPoint(scaledMesh[2], "aqua", ctx);
+    drawPoint(scaledMesh[5], "yellow", ctx);
+    
+    drawPoint(scaledMesh[9], "pink", ctx);
+    
+    drawPoint(scaledMesh[6], "red", ctx);
   }
 };
 
