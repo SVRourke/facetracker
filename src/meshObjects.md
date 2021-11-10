@@ -10,7 +10,7 @@
 // bottom nose 5
 
 // bottom middle right eye 22
-// bottom middle left eye 253 or 254
+// bottom middle left eye 253
 
 // right cheekbone 34
 // left cheekbone 264

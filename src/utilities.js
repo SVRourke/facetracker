@@ -1,22 +1,33 @@
 const processPredictions = (predictions) => {
   if (predictions.length > 0) {
-    const {
-      midwayBetweenEyes,
-      noseTip,
-      leftCheek,
-      rightCheek,
-      lipsLowerOuter,
-    } = predictions[0].annotations;
+    const { scaledMesh } = predictions[0];
     return {
-      bridge: midwayBetweenEyes[0],
-      left: leftCheek[0],
-      right: rightCheek[0],
-      center: noseTip[0],
-      bottom1: lipsLowerOuter[4],
-      bottom2: lipsLowerOuter[5],
+      top: scaledMesh[9],
+      center: scaledMesh[6],
+      bottom: scaledMesh[5],
+      right: scaledMesh[22],
+      left: scaledMesh[253],
     };
   }
 };
+
+const calculateHypotenuse = (a, b, height) => Math.sqrt(distance(a, b)**2 + height**2)
+
+// const simulateTriangle = ()
+
+// find opposite and hypotenuse
+// find arcsin of x
+
+export const calculateAngles = (predictions) => {
+  const {top, center, bottom, right, left} = processPredictions(predictions)
+
+
+  
+
+};
+
+
+
 // draw points
 const drawPoint = (point, color, ctx) => {
   const x = point[0];
@@ -27,15 +38,6 @@ const drawPoint = (point, color, ctx) => {
   ctx.fill();
 };
 
-export const calculateAngles = (predictions) => {
-  const { bridge, left, right, center, bottom1 } =
-    processPredictions(predictions);
-  return {
-    pitch: segmentRatio(bridge, center, bottom1, 1) * 100,
-    yaw: segmentRatio(left, center, right, 0) * 100,
-    roll: slope(bridge, center),
-  };
-};
 
 export const drawMesh = (predictions, ctx) => {
   if (predictions.length > 0) {
@@ -51,9 +53,8 @@ export const drawMesh = (predictions, ctx) => {
     // bottom middle left eye 253 or 254
     drawPoint(scaledMesh[253], "red", ctx);
 
-    // right cheekbone 34
-    // drawPoint(scaledMesh[34], "red", ctx);
-    // // left cheekbone 264
+    // right / left cheekbone 34
+    drawPoint(scaledMesh[253], "red", ctx);
     // drawPoint(scaledMesh[264], "red", ctx);
   }
 };
