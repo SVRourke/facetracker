@@ -40,12 +40,21 @@ export const calculateAngles = (predictions) => {
 export const drawMesh = (predictions, ctx) => {
   if (predictions.length > 0) {
     const { scaledMesh } = predictions[0];
-    drawPoint(scaledMesh[2], "aqua", ctx);
-    drawPoint(scaledMesh[5], "yellow", ctx);
-    
-    drawPoint(scaledMesh[9], "pink", ctx);
-    
     drawPoint(scaledMesh[6], "red", ctx);
+    // between eyes 9
+    drawPoint(scaledMesh[9], "red", ctx);
+    // bottom nose 5
+    drawPoint(scaledMesh[5], "red", ctx);
+
+    // bottom middle right eye 22
+    drawPoint(scaledMesh[22], "red", ctx);
+    // bottom middle left eye 253 or 254
+    drawPoint(scaledMesh[253], "red", ctx);
+
+    // right cheekbone 34
+    // drawPoint(scaledMesh[34], "red", ctx);
+    // // left cheekbone 264
+    // drawPoint(scaledMesh[264], "red", ctx);
   }
 };
 
