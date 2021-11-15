@@ -21,10 +21,10 @@ const calculateHypotenuse = (a, b, height) =>
 
 export const calculateAngles = (predictions) => {
   const { top, center, bottom, right, left } = processPredictions(predictions);
-
   const yaw = segmentRatio(left, center, right, 0);
   const pitch = segmentRatio(top, center, bottom, 1);
-  const roll = "not calculated";
+  // const roll = "not calculated";
+  const roll = slope(top, bottom);
 
   console.log(`yaw: ${yaw}, pitch: ${pitch}, roll: ${roll}`);
 };
