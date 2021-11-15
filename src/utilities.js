@@ -11,7 +11,8 @@ const processPredictions = (predictions) => {
   }
 };
 
-const calculateHypotenuse = (a, b, height) => Math.sqrt(distance(a, b)**2 + height**2)
+const calculateHypotenuse = (a, b, height) =>
+  Math.sqrt(distance(a, b) ** 2 + height ** 2);
 
 // const simulateTriangle = ()
 
@@ -19,14 +20,21 @@ const calculateHypotenuse = (a, b, height) => Math.sqrt(distance(a, b)**2 + heig
 // find arcsin of x
 
 export const calculateAngles = (predictions) => {
-  const {top, center, bottom, right, left} = processPredictions(predictions)
+  const { top, center, bottom, right, left } = processPredictions(predictions);
 
+  const yaw = segmentRatio(left, center, right, 0);
+  const pitch = segmentRatio(top, center, bottom, 1);
+  const roll = "not calculated";
 
-  
-
+  console.log(`yaw: ${yaw}, pitch: ${pitch}, roll: ${roll}`);
 };
 
-
+const slope = (a, b) => (b[1] - a[1]) / (b[0] - a[0]);
+const distance = (a, b) => Math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2);
+const midpoint = (a, b) => [a[0] + b[0], a[1] + b[1]];
+// might not work for left right as it relies on y not x
+const segmentRatio = (a, divisor, b, pos) =>
+  (a[pos] - divisor[pos]) / (divisor[pos] - b[pos]);
 
 // draw points
 const drawPoint = (point, color, ctx) => {
@@ -37,7 +45,6 @@ const drawPoint = (point, color, ctx) => {
   ctx.fillStyle = color;
   ctx.fill();
 };
-
 
 export const drawMesh = (predictions, ctx) => {
   if (predictions.length > 0) {
@@ -58,10 +65,3 @@ export const drawMesh = (predictions, ctx) => {
     // drawPoint(scaledMesh[264], "red", ctx);
   }
 };
-
-const slope = (a, b) => (b[1] - a[1]) / (b[0] - a[0]);
-const distance = (a, b) => Math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2);
-const midpoint = (a, b) => [a[0] + b[0], a[1] + b[1]];
-// might not work for left right as it relies on y not x
-const segmentRatio = (a, divisor, b, pos) =>
-  (a[pos] - divisor[pos]) / (divisor[pos] - b[pos]);
